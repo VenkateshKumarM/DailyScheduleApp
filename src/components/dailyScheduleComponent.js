@@ -33,12 +33,14 @@ function overlapDailySchedule(dailySchedule) {
                 break;
             }
         }
-        dailySchedule[i].width = timeMatch.length > 0 ? Math.floor(dailySchedule[i].width / ((timeMatch.length) + 1)) : dailySchedule[i].width;
+        if(timeMatch.length > 0) {
+        dailySchedule[i].width =  (dailySchedule[i].width / ((timeMatch.length) + 1));
         for (let k = 0; k < timeMatch.length; k++) {
             dailySchedule[timeMatch[k]].left = dailySchedule[i].width * (k + 1);
             dailySchedule[timeMatch[k]].width = dailySchedule[i].width;
         }
-        i = timeMatch.length > 0 ? timeMatch[timeMatch.length - 1] : i;
+        i = timeMatch[timeMatch.length - 1];
+    }
     }
 }
 
@@ -52,7 +54,7 @@ export function DailyScheduleComponent(props) {
         /*add duration to time in endTime and set left width for each schedule*/
         constructDailySchedule(dailySchedule)
 
-        /*find matching time to alter width and left for each schedule*/
+        /*find matching time to alter width and left for each schedule - assumption that time is sorted already else sort function have to be added before*/
         overlapDailySchedule(dailySchedule)
 
         /*construct timingDOM with timing information*/
@@ -89,7 +91,9 @@ export function DailyScheduleComponent(props) {
                         <div className="top-info">Daily schedule
               </div>
                         <ul>
-                            {dailyScheduleDOM}
+                            {
+                                dailyScheduleDOM
+                            }
                         </ul>
                     </li>
                 </ul>

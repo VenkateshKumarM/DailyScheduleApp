@@ -4,7 +4,7 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 
-const middleware = applyMiddleware(logger, ReduxThunk);
+const middleware = applyMiddleware(ReduxThunk,logger);
 
 const rootReducer = combineReducers({ dailyScheduleReducer })
 const store = createStore(rootReducer, middleware);
